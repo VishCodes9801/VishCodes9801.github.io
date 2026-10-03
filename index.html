@@ -117,6 +117,7 @@ section.sec{padding:clamp(90px,13vw,170px) 0 0;position:relative}
 .app::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.9;background:radial-gradient(600px circle at var(--mx,70%) var(--my,30%),var(--glow),transparent 60%)}
 .app.moontide{--glow:rgba(94,242,214,.10);--acc:var(--tide)}
 .app.snap{--glow:rgba(167,139,250,.13);--acc:var(--violet)}
+.app.hive{--glow:rgba(255,201,77,.10);--acc:#ffc94d}
 .app-top{display:flex;align-items:center;gap:16px}
 .app-top img{width:72px;height:72px;border-radius:17px;box-shadow:0 10px 30px -8px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08)}
 .app-top h3{font-size:clamp(28px,3.4vw,44px);letter-spacing:-.035em;line-height:1;font-weight:600}
@@ -215,7 +216,7 @@ section.sec{padding:clamp(90px,13vw,170px) 0 0;position:relative}
 
 /* ---------- LAB ---------- */
 .lab{display:grid;grid-template-columns:1.25fr 1fr;gap:28px}
-.lab .panel.car{grid-row:span 2;display:grid;grid-template-columns:auto 1fr;gap:26px}
+.lab .panel.car{display:grid;grid-template-columns:auto 1fr;gap:26px}
 .simbox{position:relative;align-self:start;border-radius:18px;overflow:hidden;background:#0a0d16;border:1px solid var(--line);width:240px}
 #carCanvas{display:block;width:240px;height:520px}
 .simhud{position:absolute;left:10px;top:10px;font-family:var(--mono);font-size:11px;line-height:1.6;color:#cfd5e3;background:rgba(4,6,13,.7);padding:6px 9px;border-radius:9px;pointer-events:none}
@@ -236,7 +237,27 @@ section.sec{padding:clamp(90px,13vw,170px) 0 0;position:relative}
 .jam b{display:block;font-size:17px;margin-top:6px;letter-spacing:-.01em;font-weight:600}
 .jam span{font-size:13px;color:var(--dim)}
 .small{font-size:12.5px;color:var(--faint);margin-top:12px}
-@media (max-width:1000px){.lab{grid-template-columns:1fr}.lab .panel.car{grid-row:auto}}
+@media (max-width:1000px){.lab{grid-template-columns:1fr}}
+.rts{margin-top:28px;border-radius:32px;border:1px solid var(--line);overflow:hidden;background:radial-gradient(700px circle at 85% 10%,rgba(255,92,138,.12),transparent 60%),radial-gradient(600px circle at 0% 100%,rgba(94,242,214,.08),transparent 60%),var(--card)}
+.rts-screen{position:relative;aspect-ratio:16/9;background:#05060c;overflow:hidden;border-bottom:1px solid var(--line)}
+.rts-shots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease,transform 7s linear;transform:scale(1.05)}
+.rts-shots img.on{opacity:1;transform:scale(1)}
+.rts-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(4,6,13,.75));pointer-events:none}
+.rts-screen.playing::after{display:none}
+.rts-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;padding:24px 34px;border-radius:24px;background:rgba(5,6,12,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s var(--ease),background .3s}
+.rts-play:hover{transform:translate(-50%,-50%) scale(1.05);background:rgba(255,92,138,.22)}
+.rts-play .tri{width:64px;height:64px;border-radius:50%;background:var(--ink);display:grid;place-items:center;box-shadow:0 0 40px rgba(255,92,138,.6)}
+.rts-play .tri::after{content:"";margin-left:6px;border-left:20px solid #05070f;border-top:12px solid transparent;border-bottom:12px solid transparent}
+.rts-play b{font-size:18px;font-weight:600;margin-top:6px}
+.rts-play small{font-size:12.5px;color:var(--dim)}
+.rts-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3;background:#000}
+.rts-body{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(24px,4vw,56px);padding:clamp(22px,3.4vw,44px)}
+.rts-title{font-size:clamp(32px,4.4vw,56px);letter-spacing:-.04em;line-height:1;font-weight:600;margin-top:10px}
+.rts .lede .it{color:var(--rose)}
+.rts .bul li::before{background:var(--rose)}
+.rts blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.2vw,28px);line-height:1.25;color:var(--moon)}
+.rts cite{display:block;margin-top:10px;font-family:var(--mono);font-style:normal;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+@media (max-width:900px){.rts-body{grid-template-columns:1fr}.rts-play{padding:16px 22px}.rts-play .tri{width:48px;height:48px}.rts-play small{display:none}}
 @media (max-width:620px){.lab .panel.car{grid-template-columns:1fr}.simbox{width:100%}#carCanvas{width:100%}}
 
 /* ---------- PATH ---------- */
@@ -333,12 +354,12 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
   <canvas id="ocean" aria-hidden="true"></canvas>
   <div class="hero-copy">
     <div class="wrap">
-      <a class="eyebrow mono" href="#contact"><span class="dot"></span>Open to internships<span class="xs-hide"> · iOS / Mobile / SWE</span></a>
+      <a class="eyebrow mono" href="#contact"><span class="dot"></span>Open to Summer 2027 internships<span class="xs-hide"> · iOS / Mobile / SWE</span></a>
       <h1 class="name" aria-label="Vishnu Purushothaman">
         <span class="ln" data-split>Vishnu</span>
         <span class="ln l2" data-split>Purushothaman</span>
       </h1>
-      <p class="hero-sub">CS at <b>UT Austin</b>. I design, build and <b>ship</b> iOS apps solo, with <b>two live on the App Store</b> and 1,000+ downloads so far.</p>
+      <p class="hero-sub">CS at <b>UT Austin</b>. I design, build and <b>ship</b> iOS apps solo, with <b>two live on the App Store</b>, two more on the way, and 1,000+ downloads so far.</p>
     </div>
   </div>
   <div class="hud">
@@ -358,7 +379,7 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
   <div class="wrap">
     <div class="stat"><div class="v" data-count="2">0</div><div class="k">apps live on the App Store</div></div>
     <div class="stat"><div class="v"><span data-count="1000" data-fmt="k">0</span><small>+</small></div><div class="k">SnapNotes downloads</div></div>
-    <div class="stat"><div class="v" data-count="497">0</div><div class="k">automated tests written</div></div>
+    <div class="stat"><div class="v"><span data-count="600">0</span><small>+</small></div><div class="k">automated tests written</div></div>
     <div class="stat"><div class="v" data-count="3.93" data-dec="2">0</div><div class="k">GPA · UT Austin CS</div></div>
   </div>
 </div>
@@ -385,11 +406,14 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
         </div>
         <p class="lede">Hold to pull the ocean toward the Moon, then let go and it <span class="it">crashes back down.</span> It's a one-touch game where you steer the water, not the fish.</p>
         <ul class="bul">
-          <li><span><b>Tide physics as the whole control scheme.</b> Your fish rides the surface, so every dodge depends on how you move the water.</span></li>
-          <li><span><b>Surge timing system.</b> Release right at the top of a swell to build a multiplier, and a full meter triggers a Tidal Rush.</span></li>
-          <li><span><b>Content that scales with distance.</b> Mines, jellyfish, diving gulls and electric gates show up as you go, and the score adapts to each biome.</span></li>
-          <li><span><b>Full meta-game:</b> a pearl economy, a cosmetics shop with try-before-you-buy, a daily tide and quests. Four updates shipped in the first two weeks.</span></li>
+          <li><span><b>Prototyped on the web, then ported to 100% native Swift</b> with zero dependencies. Golden-trace tests replay 1,100 recorded frames from the original and match the port to within 1e-11 px, so it feels exactly the same.</span></li>
+          <li><span><b>Custom Metal water shader</b> (refraction, caustics, moonlight specular, film grain) on a 120 Hz CADisplayLink loop, plus a CoreHaptics rumble that follows the water's velocity.</span></li>
+          <li><span><b>Modular architecture:</b> separate Core, Rendering, Audio and Platform Swift packages. The game core emits side effects as events, so 130+ tests check behavior without any UI.</span></li>
+          <li><span><b>Shipped as a complete product:</b> Game Center, iCloud save sync, StoreKit 2 purchases and privacy-first, non-personalized ads. Four updates went out in the first two weeks.</span></li>
         </ul>
+        <div class="chips">
+          <span class="chip">Swift</span><span class="chip">SwiftUI Canvas</span><span class="chip">Metal</span><span class="chip">CoreHaptics</span><span class="chip">AVAudioEngine</span><span class="chip">StoreKit 2</span><span class="chip">Game Center</span><span class="chip">iCloud KVS</span><span class="chip">XCTest</span>
+        </div>
         <div class="actions">
           <a class="btn pri" href="https://apps.apple.com/us/app/moontide/id6800981095" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.6 1.3-.1 1.7-.8 3.3-.8 1.5 0 1.9.8 3.3.8 1.4 0 2.2-1.2 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.5-4.1zM13.9 4.9c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z"/></svg>App Store</a>
           <a class="btn" href="https://vishcodes9801.github.io/moontide-site/" target="_blank" rel="noopener">Website ↗</a>
@@ -411,7 +435,7 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
           <div class="gloss"></div>
         </div>
         <div class="dots"></div>
-        <div class="tag-float" style="left:2%;top:16%"><b>v1.4</b><span>4 updates in 2 weeks</span></div>
+        <div class="tag-float" style="left:2%;top:16%"><b>17k</b><span>lines of Swift</span></div>
         <div class="tag-float" style="right:0;bottom:20%;animation-delay:-3s"><b>★ 5.0</b><span>App Store rating</span></div>
       </div>
     </article>
@@ -480,6 +504,45 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
         <div class="piano-status" id="pianoStatus">FÜR ELISE · <b>free play</b></div>
       </div>
     </div>
+    <!-- Hive Sort -->
+    <article class="app hive" id="hivesort" data-reveal data-spot>
+      <div>
+        <div class="app-top">
+          <img src="assets/hivesort-icon.png" alt="Hive Sort app icon" width="72" height="72">
+          <div>
+            <h3>Hive Sort</h3>
+            <div class="meta"><span class="live" style="color:#ffc94d">In the works</span><span>Puzzle · iPhone &amp; iPad</span></div>
+          </div>
+        </div>
+        <p class="lede">A hex-stack sorting puzzle. Drop stacks onto the hive, matching colors <span class="it">slide together,</span> and ten of a color turn into honey.</p>
+        <ul class="bul">
+          <li><span><b>Balanced by bots, not by guessing.</b> I wrote simulators that play every Adventure level, measure win rates and propose fixes for levels that are off target. Daily Run seeds are checked for fairness the same way.</span></li>
+          <li><span><b>Automated QA:</b> headless-Chrome playtests with real touch drags, rule checks over long runs, and a release checker that lists every remaining App Store blocker.</span></li>
+          <li><span><b>Zero image assets.</b> Every tile, bee and icon is drawn in code. Classic, Adventure (50 hand-made levels plus endless ones) and Daily Run modes.</span></li>
+        </ul>
+        <div class="chips">
+          <span class="chip">JavaScript</span><span class="chip">Canvas 2D</span><span class="chip">Capacitor 8</span><span class="chip">Swift plugins</span><span class="chip">StoreKit</span><span class="chip">AdMob</span><span class="chip">Node tooling</span>
+        </div>
+        <div class="actions">
+          <a class="btn" href="https://vishcodes9801.github.io/hivesort-site/" target="_blank" rel="noopener">Website ↗</a>
+        </div>
+      </div>
+      <div class="stage hive-stage">
+        <div class="orb"></div>
+        <div class="phone" data-tilt>
+          <div class="island"></div>
+          <div class="scr" data-carousel>
+            <img src="assets/hivesort-1.jpg" alt="Hive Sort classic mode" class="on">
+            <img src="assets/hivesort-2.jpg" alt="Hive Sort merging stacks" loading="lazy">
+            <img src="assets/hivesort-3.jpg" alt="Hive Sort adventure levels" loading="lazy">
+            <img src="assets/hivesort-4.jpg" alt="Hive Sort themes" loading="lazy">
+          </div>
+          <div class="gloss"></div>
+        </div>
+        <div class="dots"></div>
+      </div>
+    </article>
+
   </div>
 </section>
 
@@ -489,7 +552,7 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
     <div class="sec-head" data-reveal>
       <span class="mono num">02 / Deep dive</span>
       <h2>An AI that <span class="it">can't make things up.</span></h2>
-      <p><b style="color:var(--ink);font-weight:500">Companion: Diabetes Journal</b> is a local-first iPhone and Apple Watch app (now in App Review). Its assistant runs entirely on Apple's on-device Foundation Models, uses 10 data tools, and has deterministic routing gates so it can only cite data you actually logged. Nothing leaves the phone.</p>
+      <p><b style="color:var(--ink);font-weight:500">Companion: Diabetes Journal</b> is a local-first iPhone and Apple Watch app (submitted to the App Store). Its assistant runs entirely on Apple's on-device Foundation Models, uses 10 data tools, and has deterministic routing gates so it can only cite data you actually logged. Nothing leaves the phone.</p>
     </div>
 
     <div class="comp">
@@ -582,16 +645,46 @@ kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px;bor
         <div class="small">Audio is analysed locally in your browser and never uploaded.</div>
       </div>
 
-      <div class="panel" data-reveal>
-        <span class="mono" style="color:var(--coral)">48 hours, twice</span>
-        <h4 style="margin-top:8px">Texas Game Jam</h4>
-        <div class="k">Built a game solo in 48 hours at a statewide jam judged by industry professionals, then came back the next year with a different engine.</div>
-        <div class="jams">
-          <div class="jam"><div class="y">SEP 2025</div><b>Unity · C#</b><span>2D game, solo</span></div>
-          <div class="jam"><div class="y">SEP 2026</div><b>Godot</b><span>new engine, 48 hrs</span></div>
+    </div>
+
+    <!-- Return to Sender -->
+    <article class="rts" id="jam" data-reveal>
+      <div class="rts-screen" id="rtsScreen">
+        <div class="rts-shots" data-shots>
+          <img src="assets/rts-3.jpg" alt="Return to Sender: a perfect parry starting a chain against The Warden" class="on">
+          <img src="assets/rts-1.jpg" alt="Return to Sender: the chain of command story map" loading="lazy">
+          <img src="assets/rts-2.jpg" alt="Return to Sender screenshot" loading="lazy">
+          <img src="assets/rts-4.jpg" alt="Return to Sender screenshot" loading="lazy">
+          <img src="assets/rts-5.jpg" alt="Return to Sender screenshot" loading="lazy">
+        </div>
+        <button class="rts-play" id="rtsPlay" aria-label="Play Return to Sender in the browser">
+          <span class="tri"></span>
+          <b>Play in browser</b>
+          <small>43 MB · keyboard, mouse or controller</small>
+        </button>
+      </div>
+      <div class="rts-body">
+        <div>
+          <span class="mono" style="color:var(--coral)">Texas Game Jam 2026 · 48 hours · Godot</span>
+          <h3 class="rts-title">Return to Sender</h3>
+          <p class="lede" style="margin:12px 0 18px">You can't shoot, but you can <span class="it">parry.</span> Deflect a shot and it homes in on the next enemy, then the next, setting off a chain reaction.</p>
+          <ul class="bul">
+            <li><span><b>A complete game in 48 hours:</b> a story campaign with 3 zones and 3 multi-phase bosses, plus Overload, Endless and a 3-minute Blitz mode.</span></li>
+            <li><span><b>Game feel:</b> perfect parries slow down time, chain links multiply your score, and an Overdrive meter turns your dash into a ram.</span></li>
+            <li><span><b>Accessible by default:</b> assist mode, colorblind-safe shot shapes, a game speed slider, shake and flash toggles, full controller support, and 39 voiced lines, all subtitled.</span></li>
+          </ul>
+          <div class="chips"><span class="chip">Godot</span><span class="chip">GDScript</span><span class="chip">BeepBox</span><span class="chip">HTML5 · Windows · macOS</span><span class="chip">Team of 2 with Sid Darapuram</span></div>
+        </div>
+        <div class="rts-side">
+          <blockquote>"Actually one of the best feeling games I've played so far, everything feels so clean."<cite>Player review on itch.io</cite></blockquote>
+          <div class="actions" style="margin-top:18px">
+            <a class="btn pri" href="https://vishtoxic.itch.io/txgj26-vishnu" target="_blank" rel="noopener" style="--acc:var(--coral)">itch.io page ↗</a>
+            <a class="btn" href="https://youtu.be/BRx6vIR7U9o" target="_blank" rel="noopener">Watch demo ↗</a>
+          </div>
+          <div class="jam" style="margin-top:18px"><div class="y">SEP 2025 · ALSO</div><b>Texas Game Jam 2025</b><span>A solo 2D game in Unity and C#, built in 48 hours.</span></div>
         </div>
       </div>
-    </div>
+    </article>
   </div>
 </section>
 
@@ -1040,6 +1133,20 @@ addEventListener('scroll',onScroll,{passive:true}); onScroll();
   });
 })();
 
+/* ================= RETURN TO SENDER ================= */
+(()=>{
+  const scr=$('#rtsScreen'), imgs=$$('[data-shots] img',scr); let i=0;
+  const iv=setInterval(()=>{imgs[i].classList.remove('on'); i=(i+1)%imgs.length; imgs[i].classList.add('on');},3400);
+  $('#rtsPlay').onclick=()=>{
+    clearInterval(iv); scr.classList.add('playing'); $('#rtsPlay').remove();
+    if(actx&&actx.state==='running') actx.suspend();
+    const f=document.createElement('iframe');
+    f.src='https://itch.io/embed-upload/19403622?color=05060c';
+    f.allow='autoplay; fullscreen *; gamepad; cross-origin-isolated'; f.allowFullscreen=true; f.title='Return to Sender (playable)';
+    scr.appendChild(f); setTimeout(()=>f.focus(),600);
+  };
+})();
+
 /* ================= MARQUEE ================= */
 const m1=['Swift','SwiftUI','Flutter','Foundation Models','HealthKit','StoreKit 2','FastAPI','Docker','CoreML','WidgetKit','App Intents','CloudKit'];
 const m2=['ships solo','writes the tests','reads the crash logs','handles App Review','designs the icon','builds the backend','runs the subscriptions','answers the support email'];
@@ -1054,8 +1161,8 @@ const go=id=>()=>$(id).scrollIntoView({behavior:RM?'auto':'smooth'});
 const open=u=>()=>window.open(u,'_blank','noopener');
 const CMDS=[
   ['Copy email address','action',copyEmail],['Open résumé (PDF)','link',open('assets/Vishnu_Purushothaman_Resume.pdf')],
-  ['Go to Shipped apps','section',go('#shipped')],['Go to Moontide','section',go('#moontide')],['Go to SnapNotes','section',go('#snapnotes')],['Play the piano','section',go('#tryPiano')],
-  ['Go to Companion deep dive','section',go('#companion')],['Go to Lab','section',go('#lab')],['Go to Path / education','section',go('#path')],['Go to Toolkit','section',go('#toolkit')],['Go to Contact','section',go('#contact')],
+  ['Go to Shipped apps','section',go('#shipped')],['Go to Moontide','section',go('#moontide')],['Go to SnapNotes','section',go('#snapnotes')],['Go to Hive Sort','section',go('#hivesort')],['Play the piano','section',go('#tryPiano')],
+  ['Go to Companion deep dive','section',go('#companion')],['Go to Lab','section',go('#lab')],['Play Return to Sender (game jam)','section',go('#jam')],['Go to Path / education','section',go('#path')],['Go to Toolkit','section',go('#toolkit')],['Go to Contact','section',go('#contact')],
   ['Moontide on the App Store','link',open('https://apps.apple.com/us/app/moontide/id6800981095')],['SnapNotes on the App Store','link',open('https://apps.apple.com/us/app/snapnotes-falling-notes/id6788543236')],
   ['GitHub','link',open('https://github.com/vishcodes9801')],['LinkedIn','link',open('https://linkedin.com/in/vishnu-purushothaman')],
   ['Toggle sound','action',()=>soundBtn.click()],
